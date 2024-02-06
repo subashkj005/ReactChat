@@ -3,16 +3,16 @@ import React from 'react';
 const InputMessage = ({ owner, ownerAvatar, sendMessageLoading, typing, resetTyping, isLoading }) => {
   const handleSendMessage = (event) => {
     event.preventDefault();
-    const message = event.target.message.value;
-    if (message.length > 0) {
+    const message = event.target.message.value.trim();
+    if (message) {
       sendMessageLoading(owner, ownerAvatar, message);
       event.target.message.value = '';
     }
   };
 
   const handleTyping = (event) => {
-    const message = event.target.value;
-    if (message.length > 0) {
+    const message = event.target.value.trim();
+    if (message) {
       typing(owner);
     } else {
       resetTyping(owner);
@@ -20,7 +20,6 @@ const InputMessage = ({ owner, ownerAvatar, sendMessageLoading, typing, resetTyp
   };
 
   const loadingClass = isLoading ? 'chatApp__convButton--loading' : '';
-  const sendButtonIcon = <i className="material-icons">send</i>;
 
   return (
     <form onSubmit={handleSendMessage}>
@@ -35,9 +34,9 @@ const InputMessage = ({ owner, ownerAvatar, sendMessageLoading, typing, resetTyp
         onKeyDown={handleTyping}
         onKeyUp={handleTyping}
       />
-      <div className={`chatApp__convButton ${loadingClass}`} onClick={handleSendMessage}>
-        {sendButtonIcon}
-      </div>
+      <button type="submit" className={`chatApp__convButton ${loadingClass}`}>
+        <i className="fa-regular fa-paper-plane send_icon" style={{ color: '#ffffff' }}></i>
+      </button>
     </form>
   );
 };

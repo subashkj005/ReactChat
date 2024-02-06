@@ -66,11 +66,19 @@ const ChatBox = () => {
     }
   ]);
 
+  const detectURL = (message) => {
+    const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+    return message.replace(urlRegex, (urlMatch) => {
+      return '<a href="' + urlMatch + '">' + urlMatch + '</a>';
+    });
+  };
+  
+
   const [isTyping, setIsTyping] = useState({});
 
   const sendMessage = (sender, senderAvatar, message) => {
     setTimeout(() => {
-      let messageFormat = detectURL(message);
+      let messageFormat = message
       let newMessageItem = {
         id: messages.length + 1,
         sender: sender,
